@@ -1,28 +1,3 @@
-// IMPORTS
-import {weatherData, apiKey} from "./app.js";
-
-// FUNCTIONS
-const changeBackground = () => {
-  const sky = document.querySelector("main");
-  const shapes = sky.querySelectorAll(".shape");
-  let skyObject;
-  if (isRaining() || isSnowing()) {
-    if (weatherData.sky === "Drizzle")
-      skyObject = sky.querySelector(".cloud");
-    else
-      skyObject = sky.querySelector(".darkCloud");
-  } 
-  else
-    skyObject = sky.querySelector("." + weatherData.backgroundData.skyObject);
-  sky.style.backgroundColor = weatherData.backgroundData.sky;
-  skyObject.style.display = "block";
-  let i;
-  for (i = 0; i < shapes.length; i++) {
-    shapes[i].style.backgroundColor = weatherData.backgroundData.shapes[i];
-  }
-  isRaining();
-  isSnowing();
-}
 const isRaining = () => {
   switch (weatherData.sky) {
     case "Drizzle": fallAnimation(20, "rainDrop"); break;
@@ -74,133 +49,118 @@ const thunderboltAnimation = () => {
     }, 250);
   }, 5000);
 }
-const fetchWith = (url) => {
-  return fetch(url)
-    // CHECKING CONNECTION
-    .then(response => {
-      if (response.ok && response.status === 200)
-        return response.json();
+const setLocationRemotely = () => {
+  return new Promise((resolve, reject) => {
+    const inputContainer = document.querySelector(".cityInput");
+    const regExp = /[a-z]{2,}/i;
+    inputContainer.style.display = "flex";
+    inputContainer.querySelector(".submitButton").addEventListener("click", () => {
+      let cityName = inputContainer.querySelector("#city").value;
+      if (regExp.test(cityName)) {
+        inputContainer.style.display = "none";
+        resolve(cityName);
+      }
+      else if (!cityName)
+        inputContainer.querySelector(".info").textContent = "Input is empty!";
       else
-        throw new Error(`${response.status} ${response.statusText}`);
+        inputContainer.querySelector(".info").textContent = "City is incorrect!";
     })
-    // RETURNING A VALUE
-    .then(response => {
-      return response;
-    })
-    // CATCHING AN ERROR
-    .catch(error => {console.error(error)});
+  })
 }
-const connectWithDatabase = (weather) => {
-  // VARIABLES
-  const databaseUrl = "scripts/weather.json";
-  // CONNECTING WITH DATABASE
-  fetchWith(databaseUrl).then(response => {
-    if (weatherData.time >= weatherData.sunrise && weatherData.time < weatherData.sunset)
-      weatherData.backgroundData = response[weather];
-    else
-      weatherData.backgroundData = response["Night"];
-    if (weatherData.sky === "Snow")
-      weatherData.backgroundData.shapes = response["Snow"].shapes;
+const getUserLocation = () => {
+  return new Promise((resolve, reject) => {
+    if (window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition(
+        (position => resolve([position.coords.latitude, position.coords.longitude])),
+        (error => resolve(setLocationRemotely())));
+    } 
+    else {
+      reject();
+    }});
+}
+const connectWithApi = location => {
+
+  return new Promise((resolve, reject) => {
+
+    let url;
+    const apiKey = "f6847af012c269a3d5a06690548ab097";
+
+    if (typeof(location[0]) === "string") {
+      url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`;
+    } 
+    else if (typeof(location[0] === "number")) {
+      url = `http://api.openweathermap.org/data/2.5/weather?lat=${location[0]}&lon=${location[1]}&appid=${apiKey}`;
+    } 
+    else {
+      reject("Error in connectWithApi(): parameter is not a string or array");
+    }
+    fetch(url)
+      .then(response => {
+        if (response.ok && response.status === 200)
+          return response.json();
+        else
+          reject();
+      })
+      .then(response => {resolve(response)});
   });
 }
-const connectWeatherApi = (location) => {
-  // VARIABLES
-  let url;
-  // CHECKING TYPE OF PARAMETER
-  if (typeof(location[0]) === "string") {
-    url = `http://api.openweathermap.org/data/2.5/weather?q=${location[0]}&appid=${apiKey}`;
-  } else if (typeof(location[0] === "number")) {
-    url = `http://api.openweathermap.org/data/2.5/weather?lat=${location[0]}&lon=${location[1]}&appid=${apiKey}`;
-  } else {
-    throw new Error("Error in connectWeatherApi(): parameter is not a string or array");
-  }
-  // CONNECTING WITH API
-  fetchWith(url).then(response => {
-    // ASSIGNING DATA TO CONTAINER
-    console.log(response);
-    weatherData.temperature = response.main.temp;
-    weatherData.feelsLikeTemperature = response.main.feels_like;
-    weatherData.sky = response.weather[0].main;
-    weatherData.humidity = response.main.humidity;
-    weatherData.pressure = response.main.pressure;
-    weatherData.wind = response.wind.speed;
-    weatherData.city = response.name;
-    weatherData.sunrise = response.sys.sunrise;
-    weatherData.sunset = response.sys.sunset;
-    weatherData.time = response.dt;
-  });
+const connectWithDatabase = weatherData => {
+  return new Promise((resolve, reject) => {
+    const weather = weatherData.weather[0].main;
+    const databaseUrl = "scripts/weather.json";
+    fetch(databaseUrl)
+      .then(response => {
+        if (response.ok && response.status === 200)
+          return response.json();
+        else
+          reject(error);
+      })
+      .then(response => resolve(response[weather]));
+  })
 }
-const locateUser = () => {
-  // VARIABLES
-  const userLocation = window.navigator.geolocation;
-  const regExp = /[a-z]{2,}/i;
-  const container = document.querySelector(".cityInput");
-  // SUCCESS CALLBACK
-  function success(position) {
-    weatherData.location.push(position.coords.latitude);
-    weatherData.location.push(position.coords.longitude);
+const changeBackground = backgroundData => {
+  const sky = document.querySelector("main");
+  const shapes = sky.querySelectorAll(".shape");
+  const skyObject = sky.querySelector(`.${backgroundData.skyObject}`);
+  sky.style.backgroundColor = backgroundData.sky;
+  skyObject.style.display = "block";
+  for (let i = 0; i < shapes.length; i++) {
+    shapes[i].style.backgroundColor = backgroundData.shapes[i];
   }
-  // ERROR CALLBACK
-  function error() {
-    // MAKING INPUT VISIBLE
-    container.style.display = "flex";
-    // LISTENING FOR BUTTON EVENT
-    container.querySelector(".submitButton").addEventListener("click", () => {
-      // ASSIGNING A VARIABLE WITH INPUT VALUE
-      let inputValue = container.querySelector("#city").value;
-      // CHECKING IF CITY IS CORRECT
-      if (regExp.test(inputValue)) {
-        weatherData.location.push(inputValue);
-        container.style.display = "none";
-      } else if (!inputValue)
-        container.querySelector(".info").textContent = "Input is empty!";
-      else
-        container.querySelector(".info").textContent = "City is incorrect!";
-    });
-  }
-  if(userLocation)
-    userLocation.getCurrentPosition(success, error);
+}
+const convertTemperature = temperatureInKelvins => {
+  return Math.round(temperatureInKelvins - 273.15)
+}
+const correctSingularTimeUnit = timeUnit => {
+  if (timeUnit < 10)
+    return `0${timeUnit}`;
   else
-    error();
-  setTimeout(() => { console.log(weatherData) }, 100);
-  return weatherData;
+    return timeUnit;
 }
-const getCurrentDate = (time = undefined) => {
-  let date;
-  if (time != undefined)
-    date = new Date(time);
-  else
-    date = new Date();
-  const correction = (property) => {
-    if (property < 10)
-      return `0${property}`;
-    else
-      return property;
-  }
-  return {
-    "day": correction(date.getDay()),
-    "month": correction(date.getMonth()+1),
-    "year": correction(date.getFullYear()),
-    "hour": correction(date.getHours()),
-    "minute": correction(date.getMinutes()),
-    "second": correction(date.getSeconds())
-  }
-}
-const setWeather = () => {
+const showWeatherData = weatherData => {
   const cells = document.querySelectorAll(".cell");
+  const refreshTime = new Date(weatherData.dt * 1000);
   // TEMPERATURE
-  cells[0].querySelector(".data").textContent = Math.round(weatherData.temperature - 273.15) + " " + String.fromCharCode(176) + "C";
+  cells[0].querySelector(".data").textContent = `${convertTemperature(weatherData.main.temp)} °C`;
   // TIME
-  cells[1].querySelector(".data").textContent = `${getCurrentDate(weatherData.time * 1000).hour}:${getCurrentDate(weatherData.time * 1000).minute}`;
+  cells[1].querySelector(".data").textContent = `${correctSingularTimeUnit(refreshTime.getHours())}:${correctSingularTimeUnit(refreshTime.getMinutes())}`;
   // LOCATION
-  cells[2].querySelector(".data").textContent = weatherData.city;
+  cells[2].querySelector(".data").textContent = `${weatherData.name}, ${weatherData.sys.country}`;
   // FEELS LIKE
-  cells[3].querySelector(".data").textContent = Math.round(weatherData.feelsLikeTemperature - 273.15) + " " + String.fromCharCode(176) + "C";
+  cells[3].querySelector(".data").textContent = `${convertTemperature(weatherData.main.feels_like)} °C`;
   // HUMIDITY
-  cells[4].querySelector(".data").textContent = weatherData.humidity + "%";
+  cells[4].querySelector(".data").textContent = `${weatherData.main.humidity} %`;
   // PRESSURE
-  cells[5].querySelector(".data").textContent = weatherData.pressure + " hPa";
+  cells[5].querySelector(".data").textContent = `${weatherData.main.pressure} hPa`;
 }
 
-// EXPORTS
-export {changeBackground, connectWeatherApi, connectWithDatabase, locateUser, setWeather};
+export {
+  setLocationRemotely,
+  getUserLocation,
+  connectWithApi,
+  connectWithDatabase,
+  changeBackground,
+  convertTemperature,
+  correctSingularTimeUnit,
+  showWeatherData
+};
