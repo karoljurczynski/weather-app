@@ -1,0 +1,49 @@
+  {
+    "Clear": {
+      "sky": "#59c1ff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "sun",
+      "animation": "sunAnimation"
+    },
+
+    "Clouds": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud",
+      "animation": "cloudAnimation"
+    },
+
+    "Thunderstorm": {
+      "sky": "#061833",
+      "shapes": ["#007a0a", "#00750a", "#006408"],
+      "skyObject": "darkCloud",
+      "animation": "thunderstormAnimation"
+    },
+
+    "Drizzle": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud",
+      "animation": "drizzleAnimation"
+    },
+
+    "Rain": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "darkCloud",
+      "animation": "rainAnimation"
+    },
+
+    "Snow": {
+      "sky": "#cfecff",
+      "shapes": ["#f5f5f5", "#e7e7e7", "#f8f8f8"],
+      "skyObject": "darkCloud",
+      "animation": "snowAnimation"
+    },
+
+    "Night": {
+      "sky": "#061833",
+      "shapes": ["#007a0a", "#00750a", "#006408"],
+      "skyObject": "moon"
+    }
+  }

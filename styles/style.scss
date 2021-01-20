@@ -1,0 +1,273 @@
+@forward "config";
+@use "config" as *;
+@keyframes fallAnimation {
+  0% {
+    top: -10px;
+  }
+  100% {
+    top: 100%;
+  }
+}
+@keyframes sunAnimation {
+  0% {
+    box-shadow: 5px 5px 5px yellow, -5px 5px 5px yellow, 5px -5px 5px yellow, -5px -5px 5px yellow;
+    transform: rotate(0deg);
+  }
+  50% {
+    box-shadow: 1px 1px 5px yellow, -1px 1px 5px yellow, 1px -1px 5px yellow, -1px -1px 5px yellow;
+  }
+  100% {
+    box-shadow: 5px 5px 5px yellow, -5px 5px 5px yellow, 5px -5px 5px yellow, -5px -5px 5px yellow;
+    transform: rotate(360deg);
+  }
+}
+@keyframes thunderstormAnimation {
+  from {
+    background: $nighty-sky;
+  }
+  to {
+    background: white;
+  }
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.cityInput {
+  width: 100%;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+  display: none;
+}
+header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: #ededed;
+  font-size: 22px;
+  width: 600px;
+  margin-bottom: 5px;
+}
+.header-button {
+  width: 22px;
+  height: 22px;
+  font-size: 14px;
+  border: 2px solid $font-color;
+  border-radius: 11px;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .icon {
+    margin: 0;
+  }
+}
+#refresh {
+  position: absolute;
+  right: 32px;
+}
+#settings {
+  position: absolute;
+  right: 5px;
+}
+.icon {
+  display: block;
+  margin-right: 5px;
+  color: black;
+}
+.title {
+  display: block;
+  margin: 5px 0;
+}
+
+main {
+  min-width: 600px;
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+}
+.snowFlake, .rainDrop {
+  position: absolute;
+  z-index: 3;
+  top: -10px;
+  background-color: white;
+  margin: 0 auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  animation-name: fallAnimation;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+}
+.rainDrop {
+  background-color: $sunny-sky;
+  animation-duration: 1.5s;
+}
+.flexContainer {
+  width: 600px;
+  display: flex;
+  flex-flow: row wrap;
+}
+.cell {
+  width: calc(600px/3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ededed;
+}
+.description {
+  font-weight: bold;
+  margin: 5px 0;
+}
+.data {
+  margin: 0 0 5px 0;
+}
+.shape {
+  background: $shape-color-1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 600px;
+  height: 480px;
+  border-radius: 300px;
+  z-index: 3;
+  transform: rotate(90deg) translate(400px, 180px);
+  &:nth-of-type(1) {
+    transform: rotate(90deg) translate(380px, -200px);
+    background: $shape-color-2;
+    z-index: 2;
+  }
+  &:nth-of-type(2) {
+    transform: rotate(90deg) translate(350px);
+    background: $shape-color-3;
+    z-index: 1;
+  }
+}
+.sun {
+  position: relative;
+  display: none;
+  top: 20px;
+  left: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background: radial-gradient(white, yellow);
+  box-shadow: 3px 3px 5px yellow, -3px 3px 5px yellow, 3px -3px 5px yellow, -3px -3px 5px yellow;
+  animation-name: sunShining;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.moon {
+  position: relative;
+  display: none;
+  top: 20px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background: $moon-surface-color;
+  box-shadow: 1px 1px 5px white, -1px 1px 5px white, 1px -1px 5px white, -1px -1px 5px white;
+}
+.moon-detail {
+  position: absolute;
+  background: $moon-detail-color;
+  &:nth-of-type(1) {
+    width: 12px;
+    height: 12px;
+    border-radius: 10px;
+    top: 8px;
+    right: 18px;
+  }
+  &:nth-of-type(2) {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    top: 20px;
+    right: 8px;
+  }
+  &:nth-of-type(3) {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    top: 12px;
+    right: 35px;
+  }
+  &:nth-of-type(4) {
+    width: 6px;
+    height: 6px;
+    border-radius: 5px;
+    top: 30px;
+    right: 17px;
+  }
+  &:nth-of-type(5) {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    top: 25px;
+    right: 43px;
+  }
+  &:nth-of-type(6) {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    top: 25px;
+    right: 27px;
+  }
+  &:nth-of-type(7) {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    top: 40px;
+    right: 10px;
+  }
+}
+.cloud, .darkCloud {
+  display: none;
+  width: 140px;
+  height: 75px;
+  position: relative;
+  top: 20px;
+  left: 30px;
+  & > * {
+    position: absolute;
+    background: $light-cloud;
+  }
+}
+.darkCloud > * {
+  position: absolute;
+  background: $dark-cloud;
+}
+.cloud-bottom {
+  width: 138px;
+  height: 40px;
+  bottom: 1px;
+  right: 1px;
+  left: 1px;
+  border-radius: 35px;
+}
+.cloud-top {
+  width: 40px;
+  height: 80px;
+  bottom: 10px;
+  right: 28px;
+  border-radius: 0 50px 50px 0;
+  transform: rotate(-55deg);
+}
+.cloud-left {
+  width: 50px;
+  height: 50px;
+  bottom: 12px;
+  left: 20px;
+  border-radius: 50px;
+  transform: rotate(-45deg);
+}

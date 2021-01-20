@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/style.css">
+  <script type="module" src="scripts/app.js" defer></script>
+  <script type="module" src="scripts/functions.js" defer></script>
+  <title>Weather App</title>
+  <script src="https://kit.fontawesome.com/9beaa0b5ef.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="cityInput">
+    <input type="text" class="textInput" id="city" placeholder="Enter your city"/>
+    <button class="submitButton">Send</button>
+    <p class="info"></p>
+  </div>
+  <main>
+    <!-- HILLS -->
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+
+    <!-- SKY OBJECTS -->
+    <div class="sun"></div>
+
+    <div class="cloud">
+      <div class="cloud-bottom"></div>
+      <div class="cloud-top"></div>
+      <div class="cloud-left"></div>
+    </div>
+
+    <div class="darkCloud">
+      <div class="cloud-bottom"></div>
+      <div class="cloud-top"></div>
+      <div class="cloud-left"></div>
+    </div>
+
+    <div class="moon">
+      <div class="moon-detail"></div>
+      <div class="moon-detail"></div>
+      <div class="moon-detail"></div>
+      <div class="moon-detail"></div>
+      <div class="moon-detail"></div>
+      <div class="moon-detail"></div>
+      <div class="moon-detail"></div>
+    </div>
+  </main>
+  <header>
+    <span class="fas fa-cloud-sun icon"></span>
+    <p class="title">Open Weather App</p>
+    <button class="header-button" id="refresh"><span class="fas fa-redo-alt icon"></span></button>
+    <button class="header-button" id="settings"><span class="fas fa-cog icon"></span></button>
+  </header>
+  <div class="flexContainer">
+  <div class="cell">
+    <p class="description">Temperature</p>
+    <p class="data"></p>
+  </div>
+  <div class="cell">
+    <p class="description">Last refresh</p>
+    <p class="data"></p>
+  </div>
+  <div class="cell">
+    <p class="description">Location</p>
+    <p class="data"></p>
+  </div>
+  <div class="cell">
+    <p class="description">Feels like</p>
+    <p class="data"></p>
+  </div>
+  <div class="cell">
+    <p class="description">Humidity</p>
+    <p class="data"></p>
+  </div>
+  <div class="cell">
+    <p class="description">Pressure</p>
+    <p class="data"></p>
+  </div>
+
+  </div>
+</body>
+</html>
