@@ -96,6 +96,24 @@ export const isRaining = weatherData => {
   }
   return true;
 }
+export const refreshData = callback => {
+  const refreshButton = document.querySelector("#refresh");
+  refreshButton.addEventListener("click", () => {
+    const container = document.querySelector("main");
+    console.log(container.children);
+    let i;
+    for(i = 3; i < 7; i++) {
+      container.children[i].style.display = "none";
+    }
+    if (container.children.length > 8) {
+      const fallout = document.querySelectorAll(".snowFlake");
+      for (let i = 0; i < fallout.length; i++) {
+        fallout[i].remove();
+      } 
+    }
+    callback();
+  });
+}
 const setLocationRemotely = () => {
   return new Promise((resolve, reject) => {
     const inputContainer = document.querySelector(".cityInput");

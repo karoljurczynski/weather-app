@@ -4,7 +4,8 @@ import {
   connectWithDatabase,
   changeBackground,
   showWeatherData,
-  isRaining
+  isRaining,
+  refreshData
 } from "./functions.js";
 
 /*
@@ -13,7 +14,7 @@ import {
     - REFRESH BUTTON
 */
 
-(async () => {
+const main = async () => {
   const location = await getUserLocation();
   const weatherData = await connectWithApi(location);
   const backgroundData = await connectWithDatabase(weatherData);
@@ -22,4 +23,6 @@ import {
   showWeatherData(weatherData);
   changeBackground(backgroundData);
   isRaining(weatherData);
-})();
+};
+main();
+refreshData(main);
