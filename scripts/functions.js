@@ -71,11 +71,12 @@ export const changeBackground = backgroundData => {
 }
 export const showWeatherData = weatherData => {
   const cells = document.querySelectorAll(".cell");
-  let currentTime = new Date();
+  let newDate = new Date();
+  let currentTime = new Date(newDate.getTime() + weatherData.timezone * 1000);
   // TEMPERATURE
   cells[0].querySelector(".data").textContent = `${convertTemperature(weatherData.main.temp)} °C`;
   // TIME
-  cells[1].querySelector(".data").textContent = `${correctSingularTimeUnit(currentTime.getUTCHours()+(weatherData.timezone/3600))}:${correctSingularTimeUnit(currentTime.getUTCMinutes())}`;
+  cells[1].querySelector(".data").textContent = `${correctSingularTimeUnit(currentTime.getHours()-1)}:${correctSingularTimeUnit(currentTime.getMinutes())}`;
   // LOCATION
   cells[2].querySelector(".data").textContent = `${weatherData.name}, ${weatherData.sys.country}`;
   // FEELS LIKE
@@ -126,7 +127,7 @@ const isNight = weatherData => {
   const currentTime = new Date();
   const sunriseTime = weatherData.sys.sunrise + (weatherData.timezone/3600);
   const sunsetTime = weatherData.sys.sunset + (weatherData.timezone/3600);
-  if (Math.trunc(currentTime.getTime() / 1000) < sunriseTime || Math.trunc(currentTime.getTime()/1000) >= sunsetTime)
+  if (currentTime.getTime() < sunriseTime * 1000 || currentTime.getTime() >= sunsetTime * 1000)
     return true;
   else
     return false
