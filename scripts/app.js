@@ -17,6 +17,8 @@ import {
   const location = await getUserLocation();
   const weatherData = await connectWithApi(location);
   const backgroundData = await connectWithDatabase(weatherData);
+  console.log(weatherData);
+  console.log(backgroundData);
   showWeatherData(weatherData);
   changeBackground(backgroundData);
   isRaining(weatherData);

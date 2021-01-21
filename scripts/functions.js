@@ -47,7 +47,7 @@ export const connectWithDatabase = weatherData => {
           reject(error);
       })
       .then(response => {
-        if (weatherData.dt <= weatherData.sys.sunrise && weatherData.dt > weatherData.sys.sunset) {
+        if (isNight(weatherData)) {
           if (weather === "Clear")
             response[weather] = response["Night"];
           else if (weather != "Snow")
@@ -71,11 +71,11 @@ export const changeBackground = backgroundData => {
 }
 export const showWeatherData = weatherData => {
   const cells = document.querySelectorAll(".cell");
-  const refreshTime = new Date(weatherData.dt * 1000);
+  let currentTime = new Date();
   // TEMPERATURE
   cells[0].querySelector(".data").textContent = `${convertTemperature(weatherData.main.temp)} °C`;
   // TIME
-  cells[1].querySelector(".data").textContent = `${correctSingularTimeUnit(refreshTime.getHours())}:${correctSingularTimeUnit(refreshTime.getMinutes())}`;
+  cells[1].querySelector(".data").textContent = `${correctSingularTimeUnit(currentTime.getUTCHours()+(weatherData.timezone/3600))}:${correctSingularTimeUnit(currentTime.getUTCMinutes())}`;
   // LOCATION
   cells[2].querySelector(".data").textContent = `${weatherData.name}, ${weatherData.sys.country}`;
   // FEELS LIKE
@@ -122,8 +122,17 @@ const correctSingularTimeUnit = timeUnit => {
   else
     return timeUnit;
 }
+const isNight = weatherData => {
+  const currentTime = new Date();
+  const sunriseTime = weatherData.sys.sunrise + (weatherData.timezone/3600);
+  const sunsetTime = weatherData.sys.sunset + (weatherData.timezone/3600);
+  if (Math.trunc(currentTime.getTime() / 1000) < sunriseTime || Math.trunc(currentTime.getTime()/1000) >= sunsetTime)
+    return true;
+  else
+    return false
+}
 const fallAnimation = (numberOfObjects, typeOfObject) => {
-  let u;
+  let i;
   for (i = 1; i <= numberOfObjects; i++) {
     let randomDropObjectPosition = Math.ceil(Math.random() * 100);
     let dropObject = document.createElement("div");
