@@ -14,7 +14,7 @@
     },
 
     "Thunderstorm": {
-      "sky": "#061833",
+      "sky": "#2d3b50",
       "shapes": ["#007a0a", "#00750a", "#006408"],
       "skyObject": "darkCloud",
       "animation": "thunderstormAnimation"
