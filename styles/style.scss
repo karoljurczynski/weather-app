@@ -30,18 +30,36 @@
   }
 }
 body {
+  position: relative;
   display: flex;
   flex-direction: column;
 }
 .cityInput {
-  width: 100%;
-  background: black;
+  height: 200px;
+  position: absolute;
+  z-index: 4;
+  top: 100px;
+  width: 200px;
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 30px 0;
   display: none;
+}
+.cityInput > * {
+  margin-top: 20px;
+}
+.textInput {
+  width: 90%;
+}
+.submitButton {
+  width: 90%;
+  background: green;
+  color: white;
+  box-shadow: none;
+  outline-style: transparent;
 }
 header {
   position: relative;
@@ -51,7 +69,7 @@ header {
   justify-content: center;
   background: #ededed;
   font-size: 22px;
-  width: 600px;
+  width: 60%;
   margin-bottom: 5px;
 }
 .header-button {
@@ -64,6 +82,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   .icon {
     margin: 0;
   }
@@ -87,10 +106,11 @@ header {
 }
 
 main {
-  min-width: 600px;
+  min-width: 60%;
   height: 400px;
   position: relative;
   overflow: hidden;
+  background: gray;
 }
 .snowFlake, .rainDrop {
   position: absolute;
@@ -112,12 +132,12 @@ main {
   animation-duration: 1.5s;
 }
 .flexContainer {
-  width: 600px;
+  width: 60%;
   display: flex;
   flex-flow: row wrap;
 }
 .cell {
-  width: calc(600px/3);
+  width: calc(100%/3);
   display: flex;
   flex-direction: column;
   justify-content: space-around;

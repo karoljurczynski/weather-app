@@ -2,43 +2,91 @@
     "Clear": {
       "sky": "#59c1ff",
       "shapes": ["#00b50e", "#00ab0e", "#00c910"],
-      "skyObject": "sun",
-      "animation": "sunAnimation"
+      "skyObject": "sun"
     },
 
     "Clouds": {
       "sky": "#cfecff",
       "shapes": ["#00b50e", "#00ab0e", "#00c910"],
-      "skyObject": "cloud",
-      "animation": "cloudAnimation"
+      "skyObject": "cloud"
     },
 
     "Thunderstorm": {
       "sky": "#2d3b50",
       "shapes": ["#007a0a", "#00750a", "#006408"],
-      "skyObject": "darkCloud",
-      "animation": "thunderstormAnimation"
+      "skyObject": "darkCloud"
     },
 
     "Drizzle": {
       "sky": "#cfecff",
       "shapes": ["#00b50e", "#00ab0e", "#00c910"],
-      "skyObject": "cloud",
-      "animation": "drizzleAnimation"
+      "skyObject": "cloud"
     },
 
     "Rain": {
       "sky": "#cfecff",
       "shapes": ["#00b50e", "#00ab0e", "#00c910"],
-      "skyObject": "darkCloud",
-      "animation": "rainAnimation"
+      "skyObject": "darkCloud"
     },
 
     "Snow": {
       "sky": "#cfecff",
       "shapes": ["#f5f5f5", "#e7e7e7", "#f8f8f8"],
-      "skyObject": "darkCloud",
-      "animation": "snowAnimation"
+      "skyObject": "darkCloud"
+    },
+
+    "Mist": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+
+    "Smoke": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+    
+    "Haze": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+
+    "Dust": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+
+    "Fog": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+
+    "Sand": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+
+    "Ash": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+
+    "Squall": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
+    },
+
+    "Tornado": {
+      "sky": "#cfecff",
+      "shapes": ["#00b50e", "#00ab0e", "#00c910"],
+      "skyObject": "cloud"
     },
 
     "Night": {

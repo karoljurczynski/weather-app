@@ -72,11 +72,11 @@ export const changeBackground = backgroundData => {
 export const showWeatherData = weatherData => {
   const cells = document.querySelectorAll(".cell");
   let newDate = new Date();
-  let currentTime = new Date(newDate.getTime() + weatherData.timezone * 1000);
+  let currentTime = new Date(newDate.getTime() + weatherData.timezone * 1000 - 3600000);
   // TEMPERATURE
   cells[0].querySelector(".data").textContent = `${convertTemperature(weatherData.main.temp)} °C`;
   // TIME
-  cells[1].querySelector(".data").textContent = `${correctSingularTimeUnit(currentTime.getHours()-1)}:${correctSingularTimeUnit(currentTime.getMinutes())}`;
+  cells[1].querySelector(".data").textContent = `${correctSingularTimeUnit(currentTime.getHours())}:${correctSingularTimeUnit(currentTime.getMinutes())}`;
   // LOCATION
   cells[2].querySelector(".data").textContent = `${weatherData.name}, ${weatherData.sys.country}`;
   // FEELS LIKE
@@ -105,8 +105,13 @@ export const refreshData = callback => {
     for(i = 3; i < 7; i++) {
       container.children[i].style.display = "none";
     }
-    if (container.children.length > 8) {
-      const fallout = document.querySelectorAll(".snowFlake");
+    if (container.children.length > 7) {
+      let fallout;
+      console.log(container.children[7].className);
+      if (container.children[7].className === "snowFlake")
+        fallout = document.querySelectorAll(".snowFlake");
+      else 
+        fallout = document.querySelectorAll(".rainFall");
       for (let i = 0; i < fallout.length; i++) {
         fallout[i].remove();
       } 

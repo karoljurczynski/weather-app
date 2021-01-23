@@ -92,6 +92,7 @@ body {
   }
 }
 body {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -102,8 +103,12 @@ body {
 }
 
 .cityInput {
-  width: 100%;
-  background: black;
+  height: 200px;
+  position: absolute;
+  z-index: 4;
+  top: 100px;
+  width: 200px;
+  background: rgba(0, 0, 0, 0.2);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -119,6 +124,23 @@ body {
           justify-content: center;
   padding: 30px 0;
   display: none;
+}
+
+.cityInput > * {
+  margin-top: 20px;
+}
+
+.textInput {
+  width: 90%;
+}
+
+.submitButton {
+  width: 90%;
+  background: green;
+  color: white;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  outline-style: transparent;
 }
 
 header {
@@ -138,7 +160,7 @@ header {
           justify-content: center;
   background: #ededed;
   font-size: 22px;
-  width: 600px;
+  width: 60%;
   margin-bottom: 5px;
 }
 
@@ -159,6 +181,7 @@ header {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  cursor: pointer;
 }
 .header-button .icon {
   margin: 0;
@@ -186,10 +209,11 @@ header {
 }
 
 main {
-  min-width: 600px;
+  min-width: 60%;
   height: 400px;
   position: relative;
   overflow: hidden;
+  background: gray;
 }
 
 .snowFlake, .rainDrop {
@@ -220,7 +244,7 @@ main {
 }
 
 .flexContainer {
-  width: 600px;
+  width: 60%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -231,7 +255,7 @@ main {
 }
 
 .cell {
-  width: calc(600px/3);
+  width: calc(100%/3);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
